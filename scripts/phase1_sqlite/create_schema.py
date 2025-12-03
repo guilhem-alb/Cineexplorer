@@ -1,6 +1,5 @@
 import sqlite3
 
-
 with sqlite3.connect("../../data/imdb.db") as conn:
     c = conn.cursor()
 
@@ -24,7 +23,7 @@ with sqlite3.connect("../../data/imdb.db") as conn:
     c.execute("""
     CREATE TABLE characters (
     character_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name VARCHAR(100)
+    name VARCHAR(100) UNIQUE NOT NULL COLLATE NOCASE
     )    
     """)
 
@@ -46,14 +45,14 @@ with sqlite3.connect("../../data/imdb.db") as conn:
     c.execute("""
     CREATE TABLE genres (
     genre_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    genre VARCHAR(50)
+    genre VARCHAR(50) UNIQUE NOT NULL COLLATE NOCASE
     )
     """)
 
     # Table knownformovies
 
     c.execute("""
-    CREATE TABLE knownformovies (
+    CREATE TABLE known_for_movies (
     person_id VARCHAR(20),
     movie_id VARCHAR(20),
               
@@ -70,11 +69,11 @@ with sqlite3.connect("../../data/imdb.db") as conn:
         movie_id VARCHAR(20) PRIMARY KEY,
         isAdult BOOLEAN,
         startYear INTEGER,
-        endYear REAL,
-        runtimeMinutes REAL,
+        endYear INTEGER,
+        runtimeMinutes INTEGER,
               
-        CHECK(startYear > 1900),
-        CHECK(endYear > 1900 AND endYear >= startYear),
+        CHECK(startYear >= 1895),
+        CHECK(endYear >= 1895 AND endYear >= startYear),
         CHECK(runtimeMinutes > 0)
     )
     """)
@@ -85,11 +84,11 @@ with sqlite3.connect("../../data/imdb.db") as conn:
     CREATE TABLE persons (
         person_id VARCHAR(20) PRIMARY KEY,
         primaryName VARCHAR(100),
-        birthYear REAL,
-        deathYear REAL,
+        birthYear INTEGER,
+        deathYear INTEGER,
               
         CHECK(birthYear > 1800),
-        CHECK(deathYear > 1850 AND deathYear > birthYear)
+        CHECK(deathYear > 1850 AND deathYear >= birthYear)
     )   
     """)
 
@@ -128,7 +127,7 @@ with sqlite3.connect("../../data/imdb.db") as conn:
     c.execute("""
     CREATE TABLE professions (
         profession_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        jobName VARCHAR(100)
+        jobName VARCHAR(100) UNIQUE NOT NULL COLLATE NOCASE
     )
     """)
 
@@ -143,7 +142,7 @@ with sqlite3.connect("../../data/imdb.db") as conn:
         FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
         
         CHECK(averageRating >= 0 AND averageRating <= 10),
-        CHECK(numVotes > 0)
+        CHECK(numVotes >= 0)
     )
     """)
 
@@ -158,7 +157,7 @@ with sqlite3.connect("../../data/imdb.db") as conn:
         language VARCHAR(20),
         types VARCHAR(100),
         attributes VARCHAR(100),
-        isOriginalTitle BOOLEAN,
+        isOriginal BOOLEAN,
         isPrimary BOOLEAN,
               
         PRIMARY KEY (movie_id, ordering),
