@@ -1,1 +1,5 @@
 data/mongo/**
+*.db
+*.db-journal
+
+__pycache__
