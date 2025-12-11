@@ -7,7 +7,7 @@ with sqlite3.connect("../../data/imdb.db") as conn:
     """)
 
     conn.execute("""
-        CREATE INDEX IF NOT EXISTS idx_pr_movie_id
+        CREATE INDEX IF NOT EXISTS idx_pr_movie
         ON principals(movie_id);
     """)
 
