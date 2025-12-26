@@ -30,11 +30,5 @@ def print_all_query_times(conn):
     print_exec_time(conn, query_children_stars, "enfants star")
 
 with sqlite3.connect("../../data/imdb.db") as conn:
-    print_all_query_times(conn)
-    # print(query_multi_role_actors(conn, explain=True))
-    # print(query_collaborations(conn, "brad Pitt", explain=True))
-    # print(query_popular_genres(conn, explain=True))
-    # print(query_career_evolution(conn, "brad pitt", explain=True))
-    # print(query_genre_ranking(conn, explain=True))
-    # print(query_propulsated_careers(conn, explain=True))
-    # print(query_children_stars(conn, explain=True))
+    # print_all_query_times(conn)
+    print(query_career_evolution(conn, "brad pitt"))

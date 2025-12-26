@@ -232,8 +232,10 @@ def query_propulsated_careers(conn, explain: bool=False) -> list:
             JOIN movies m ON pr.movie_id = m.movie_id
             JOIN ratings r ON m.movie_id = r.movie_id
             WHERE r.num_votes > 200000
-        ) WHERE hit_num = 1
-    ), last_non_hit AS (
+        ) 
+        WHERE hit_num = 1
+    ),
+    last_non_hit AS (
         SELECT person_id, movie_id, year FROM (
             SELECT pe.person_id, m.movie_id, m.year, ROW_NUMBER() OVER (
                 PARTITION BY pe.person_id
@@ -244,7 +246,9 @@ def query_propulsated_careers(conn, explain: bool=False) -> list:
             JOIN movies m ON pr.movie_id = m.movie_id
             JOIN ratings r ON m.movie_id = r.movie_id
             WHERE r.num_votes < 200000
-        ) WHERE nhit_num = 1)
+        ) 
+        WHERE nhit_num = 1
+    )
 
     SELECT pe.name, t.title_name, fh.year
     FROM first_hit fh
