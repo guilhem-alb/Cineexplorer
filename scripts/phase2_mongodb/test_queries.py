@@ -2,10 +2,9 @@ from pymongo import MongoClient
 import time
 
 from queries_mongo import *
-from migrate_structured import query_movies_complete_from_flat
 
 
-def print_exec_time(db, query, query_name: str, *args, **kwargs) -> None:
+def print_exec_time(db, query, query_name: str, *args) -> None:
     """
     Affiche le temps d'exécution de la requête spécifiée.
     Args:
@@ -15,7 +14,7 @@ def print_exec_time(db, query, query_name: str, *args, **kwargs) -> None:
         *args, **kwargs: Arguments à passer à la requête
     """
     t_ini = time.time()
-    query(db, *args, **kwargs)
+    query(db, *args)
     t_fin = time.time()
     print(query_name + ": ", t_fin - t_ini, "secondes.")
 
@@ -29,7 +28,6 @@ def print_all_query_times(db):
     print_exec_time(db, mg_query_genre_ranking, "classement par genre")
     print_exec_time(db, mg_query_propulsated_careers, "carriere propulsee")
     print_exec_time(db, mg_query_children_stars, "enfants star")
-    print_exec_time(db, query_movies_complete_from_flat, "movies_complete, N requêtes", movie_id="tt0111161")
 
 
 with MongoClient('mongodb://localhost:27017/') as client:

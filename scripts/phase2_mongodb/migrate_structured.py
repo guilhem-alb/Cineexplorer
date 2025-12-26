@@ -203,8 +203,7 @@ def query_movies_complete_from_flat(db, movie_id=None):
             "cast": 1,
             "writers": 1,
             "titles": 1
-        }},
-        {"$limit": 370}
+        }}
     ]
 
     if movie_id:

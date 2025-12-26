@@ -8,11 +8,11 @@ with MongoClient('mongodb://localhost:27017/') as client:
 
     db["principals"].create_index("movie_id")
     db["principals"].create_index("person_id")
-    db["principals"].create_index(
+    db["principals"].create_index([
         ("person_id", ASCENDING),
         ("profession_id", ASCENDING),
         ("movie_id", ASCENDING)
-    )
+    ])
 
     db["movies"].create_index("movie_id")
 
