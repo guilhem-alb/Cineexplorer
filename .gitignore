@@ -3,3 +3,6 @@ data/mongo/**
 *.db-journal
 
 __pycache__
+.venv
+
+theme/static

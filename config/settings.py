@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Other django apps
+    'tailwind',
+    'theme',
 ]
 
 MIDDLEWARE = [
@@ -76,6 +79,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'data' / 'imdb.db',
+    },
+
+    'mongo': {
+        'ENGINE': 'django_mongodb_backend',
+        'HOST': 'mongodb://localhost:27017',
+        'NAME': 'imdb'
     }
 }
 
@@ -120,3 +129,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+NPM_BIN_PATH = 'C:/Program Files/nodejs/npm.cmd'
+
+TAILWIND_APP_NAME = 'theme'
