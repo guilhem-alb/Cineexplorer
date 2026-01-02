@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <div>
+        <div class="movie-card" data-imdb-id="{{ mid }}">
+            <img class="movie-thumbnail" alt="{{ title }}" style="width: 400px">
+        </div>
+
+        <div>
+            <h3>{{ title }}</h3>
+            <div>
+                <h4>Genres:</h4>
+                <ul>
+                    {% for g in genres %}
+                        <li>{{ g }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% if directors %}
+            <div>
+                Directed by:
+                <ul>
+                    {% for d in directors%}
+                    <li>
+                        {{ d.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% if writers %}
+            <div>
+                Written by:
+                <ul>
+                    {% for w in writers%}
+                    <li>
+                        {{ w.name }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div>
+        <h3>Cast: </h3>
+        <ul>
+            {% for c in cast %}
+                <li>
+                    <h4>{{ c.name }} as:</h4>
+                    <ul>
+                        {% for char in c.characters %}
+                            <li>
+                                {{ char }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div>
+        {% if titles %}
+        <h3>
+            Alternative titles:
+        </h3>
+        {% endif %}
+        <div id="regions">
+        </div>
+    </div>
+
+    <div>
+        <h3>Similar: </h3>
+        <div>
+            <h4>By the same director(s): </h4>
+            {% for d in directors_rec %}
+                {% include "movies/components/movie_card.html" with mid=d.mid title=d.title width=100 %}
+            {% endfor %}
+        </div>
+        <div>
+            <h4>Similar genres: </h4>
+            {% for g in genres_rec %}
+                {% include "movies/components/movie_card.html" with mid=g.mid title=g.title width=100 %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'movies/js/fetch_movie_thumbnails.js' %}" defer></script>
+<script>
+    const titles = [
+        {% for t in titles %}
+            {"region": "{{ t.region }}", "title": "{{ t.title }}"},
+        {% endfor %}
+    ];
+
+    const container = document.getElementById("regions");
+    titles.forEach(t => {
+        let regionDiv = document.getElementById(t.title);
+
+        if (!regionDiv) {
+            regionDiv = document.createElement("div");
+            regionDiv.id = t.region;
+            
+            const region_name = document.createElement("h4");
+            if (t.region != "None")
+                region_name.textContent = t.region;
+            else
+                region_name.textContent = "unknown";
+            regionDiv.appendChild(region_name);
+
+            container.appendChild(regionDiv);
+        }
+
+        const item = document.createElement("div");
+        item.textContent = t.title;
+        regionDiv.appendChild(item);
+    });
+</script>
+{% endblock %}

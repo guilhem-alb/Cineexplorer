@@ -38,7 +38,6 @@ def test_failover(pClient, s1Client, s2Client):
         print("Data is readable on new primary")
 
 
-
 with MongoClient('mongodb://localhost:27017/') as pClient, MongoClient('mongodb://localhost:27018/') as s1Client, MongoClient('mongodb://localhost:27018/') as s2Client:
     pDB, s1DB, s2DB = pClient["imdb"], s1Client["imdb"], s2Client["imdb"]
 

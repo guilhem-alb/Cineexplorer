@@ -1,0 +1,20 @@
+<div>
+    {% if page_count == 0 %}
+    <h3>No results found try using a different search</h3>
+    {% else %}
+    <p>Showing page {{ page_num }} of {{ page_count }}</p>
+    {% for movie in films %}
+        {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title width=100 %}
+    {% endfor %}
+
+    <div>
+        <div>
+            {% if page_num > 4 %}<a href="?{{ base_qs }}&page=1">1 <<</a>...{% endif %}
+            {% for i in page_nav_range %}
+                <a href="?{{ base_qs }}&page={{ i }}">{{ i }}</a>
+            {% endfor %}
+            {% if page_num < page_count|add:"-4" %}...<a href="?{{ base_qs }}&page={{ page_count }}">>>{{ page_count }}</a>{% endif %}
+        </div> 
+    </div>
+    {% endif %}
+</div>

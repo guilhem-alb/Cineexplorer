@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+
+<div>
+    <h2>Search for:</h2>
+    <form method="get">
+        <label>Search by:
+        <select name="type">
+            <option value="title" {% if request.GET.type == "title" %}selected{% endif %}>movie title</option>
+            <option value="person" {% if request.GET.type == "person" %}selected{% endif %}>person name</option>
+        </select>
+        </label>
+
+        <label>
+            <input type="search" name="q" value={{ request.GET.q }} placeholder="Search">
+        </label>
+        
+        <button type="submit">Search</button>
+    </form>
+</div>
+{% include "movies/components/movie_page.html" with films=films page_num=page_num page_count=page_count page_nav_range=page_nav_range base_qs=base_qs %}
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'movies/js/fetch_movie_thumbnails.js' %}" defer></script>
+{% endblock %}

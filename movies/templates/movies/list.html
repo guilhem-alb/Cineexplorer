@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Movie list{% endblock%}
+
+{% block content %}
+
+<div>
+    Filters:
+    <form method="get">
+
+        <label>Genre:
+        <select name="genre">
+            <option value=""></option>
+            {% for g in genres %}
+                <option value="{{ g }}" {% if request.GET.genre == g %}selected{% endif %}>{{ g }}</option>
+            {% endfor %}
+        </select>
+        </label>
+
+        <label>Min year:
+        <input type="number" name="min_year" value={{ request.GET.min_year }}>
+        </label>
+
+        <label>Max year:
+        <input type="number" name="max_year" value={{ request.GET.max_year }}>
+        </label>
+
+        <label>Min note:
+        <input type="number" name="min_note" value={{ request.GET.min_note }}>
+        </label>
+
+        <div>
+            <h4>Sort:</h4>
+            <label>By:
+            <select name="sort">
+                <option value="title" {% if request.GET.sort == 'title' or request.GET.sort == ''%}selected{% endif %}>Title</option>
+                <option value="year" {% if request.GET.sort == 'year'%}selected{% endif %}>Year</option>
+                <option value="note" {% if request.GET.sort == 'note'%}selected{% endif %}>Rating</option>
+            </select>
+            </label>
+            <label>Order:
+            <select name='order'>
+                <option value="ASC" {% if request.GET.order == "ASC" or request.GET.sort == ''%}selected{% endif %}>Ascending</option>
+                <option value="DESC" {% if request.GET.order == "DESC" %}selected{% endif %}>Descending</option>
+            </select>
+            </label>
+        </div>
+        <button type="submit">Apply filters</button>
+    </form>
+</div>
+
+
+{% include "movies/components/movie_page.html" with films=films page_num=page_num page_count=page_count page_nav_range=page_nav_range base_qs=base_qs %}
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'movies/js/fetch_movie_thumbnails.js' %}" defer></script>
+{% endblock %}

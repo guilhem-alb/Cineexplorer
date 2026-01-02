@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Cineexplorer{% endblock %}
+
+
+{% block content %}
+<div>
+    <h1> Cineexplorer </h1>
+    <h4> a movies database explorer</h4>
+</div>
+
+<div>
+    <h2>Our data:</h2>
+    <div>
+        <h3>{{ stats.movieCnt }} Movies !</h3>
+        <h3> {{ stats.actorCnt }} Actors !</h3>
+        <h3>{{ stats.directorCnt }} Directors !</h3>
+    </div>
+</div>
+
+<div>
+    <h2> Search for any movie ! </h2>
+    <form method="get" action="/search">
+        <input name="q" type="search" placeholder="search">
+        <input type="submit" value="submit">
+    </form>
+</div>
+
+<div>
+    <h2>The biggest hits !</h2>
+    <div>
+        {% for movie in top_movies %}
+            <div>
+                <h3>{{ movie.rank }}</h3>
+                <div>
+                    {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title width=100%}
+                    note: {{ movie.rating }}, votes: {{ movie.votes }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div>
+    <h2>Discover: </h2>
+    {% for movie in rd_movies %}
+        {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title width=100 %}
+    {% endfor %}
+</div>
+{% endblock %} 
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'movies/js/fetch_movie_thumbnails.js' %}" defer></script>
+{% endblock %}

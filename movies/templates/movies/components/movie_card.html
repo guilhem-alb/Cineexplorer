@@ -1,0 +1,8 @@
+<!-- Component consisting of a movie thumbnail + title args: movie_id, title
+     Must include static/js/fetch_movie_thumbnails.js along with this component-->
+
+<div class="movie-card" data-imdb-id="{{ mid }}" onclick="window.location.replace('/movies/{{ mid }}')">
+    <img class="movie-thumbnail" alt="{{ title }}" style="width: {{ width }}px">
+    <h3>{{ title }}</h3>
+</div>
+

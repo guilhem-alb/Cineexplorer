@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %} Cineexplorer {% endblock %}</title>
+
+    {% load static %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <header>
+        <h1> Cineexplorer</h1>
+        <div>
+            <nav>
+                <a href="/">Home page</a>
+                <a href="/movies">Movies</a>
+                <a href="/stats">Statistics</a>
+            </nav>
+            <form method="get" action="/search">
+                <input name="q" type="search" placeholder="search">
+                <input type="submit" value="submit">
+            </form>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
