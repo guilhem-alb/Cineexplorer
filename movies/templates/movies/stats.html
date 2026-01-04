@@ -1,10 +1,79 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="grid md:grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="w-full p-4 border border-white">
+        <h3 class="text-2xl font-semibold underline">Distribution of movies by genres:</h3>
+        <canvas class="bg-gray-800" id="genres-canvas"></canvas>
+    </div>
+    <div class="w-full p-4 border border-white">
+        <h3 class="text-2xl font-semibold underline">Distribution of movies by decades:</h3>
+        <canvas class="bg-gray-800" id="decades-canvas"></canvas>
+    </div>
+    <div class="w-full p-4 border border-white">
+        <h3 class="text-2xl font-semibold underline">Distribution of movies by average rating:</h3>
+        <canvas class="bg-gray-800" id="ratings-canvas"></canvas>
+    </div>
+    <div class="w-full p-4 border border-white">
+        <h3 class="text-2xl font-semibold underline">Ten most prolific actors:</h3>
+        <ul class="pl-10 pt-6 bg-gray-800">
+            {% for p in prolific_actors %}
+                <li class="pt-2">
+                    - {{ p.actor }}, played in: {{ p.movies_played }} movies.
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 {% endblock %}
 
 
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("genres-canvas"), {
+    type: "bar",
+    data: {
+        labels: [{% for g in movies_by_genre %} "{{ g.genre }}", {% endfor %}],
+        datasets: [{
+            label: "number of movies",
+            data: [{% for g in movies_by_genre %} {{ g.movie_count }}, {% endfor %}]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true
+    }
+}); // movies_by_genre
+
+new Chart(document.getElementById("decades-canvas"), {
+    type: "line",
+    data: {
+        labels: [{% for d in movies_by_decade %} {{ d.decade }}, {% endfor %}],
+        datasets: [{
+            label: "number of movies",
+            data: [{% for d in movies_by_decade %} {{ d.movie_count }}, {% endfor %}],
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true
+    }
+}); // movies_by_decade
+
+new Chart(document.getElementById("ratings-canvas"), {
+    type: "bar",
+    data : {
+        labels: [{% for r in ratings_dist %} {{ r.bin }}, {% endfor %}],
+        datasets : [{
+            label: "number of movies",
+            data: [{% for r in ratings_dist %} {{ r.count }}, {% endfor %}]
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: true
+    }
+}); // ratings_dist
+</script>
 {% endblock %}

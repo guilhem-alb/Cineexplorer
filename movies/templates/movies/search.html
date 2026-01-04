@@ -4,24 +4,26 @@
 
 {% block content %}
 
-<div>
-    <h2>Search for:</h2>
-    <form method="get">
+<div class="flex-row justify-center border-t border-b border-white p-2 bg-gray-800">
+    <h2 class="text-2xl font-semibold">Search for:</h2>
+    <form method="get" class="md:flex sm:flex-row justify-start space-x-3">
         <label>Search by:
-        <select name="type">
+        <select name="type" class="bg-amber-50 rounded-xl text-black p-1">
             <option value="title" {% if request.GET.type == "title" %}selected{% endif %}>movie title</option>
             <option value="person" {% if request.GET.type == "person" %}selected{% endif %}>person name</option>
         </select>
         </label>
 
         <label>
-            <input type="search" name="q" value={{ request.GET.q }} placeholder="Search">
+            <input placeholder="Your search here" class="bg-amber-50 rounded-xl text-black p-1" type="search" name="q" value={{ request.GET.q }}>
         </label>
         
-        <button type="submit">Search</button>
+        <button type="submit" class="bg-blue-400 text-black rounded-2xl p-1 shadow-md shadow-black transition-shadow hover:shadow-inner ">Search</button>
     </form>
 </div>
+<div class="flex justify-center">
 {% include "movies/components/movie_page.html" with films=films page_num=page_num page_count=page_count page_nav_range=page_nav_range base_qs=base_qs %}
+</div>
 {% endblock %}
 
 {% block extra_js %}

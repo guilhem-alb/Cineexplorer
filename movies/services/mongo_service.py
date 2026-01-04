@@ -1,8 +1,6 @@
 from django.conf import settings
 from pymongo import MongoClient
 
-from scripts.phase2_mongodb.queries_mongo import *
-
 _client = MongoClient(settings.DATABASES["mongo"]["HOST"])
 _db = _client[settings.DATABASES["mongo"]["NAME"]]
 

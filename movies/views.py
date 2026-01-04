@@ -103,6 +103,11 @@ def search_view(request):
     return render(request, "movies/search.html", context)
 
 def stats_view(request):
-    movies_by_genre = get_movies_count_by_genre()
-    movies_by_decae = get_movies_count_by_decade()
-    return render(request, "movies/stats.html")
+    context = {
+        "movies_by_genre":  get_movies_count_by_genre(),
+        "movies_by_decade": get_movies_count_by_decade(),
+        "ratings_dist":     get_ratings_distribution(1),
+        "prolific_actors":  get_top_N_prolific_actors(10)
+    }
+
+    return render(request, "movies/stats.html", context)

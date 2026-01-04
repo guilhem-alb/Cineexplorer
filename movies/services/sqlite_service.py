@@ -219,3 +219,30 @@ def get_movies_count_by_decade() -> dict:
         res = c.execute(sql).fetchall()
     res = [{"movie_count": r[0], "decade": r[1]} for r in res]
     return res
+
+def get_ratings_distribution(bin_size: int) -> list[dict]:
+    with connection.cursor() as c:
+        sql = """
+            SELECT CAST(average_rating / ? AS INTEGER) * ? AS bin,
+            COUNT(movie_id) AS count
+            FROM ratings
+            GROUP BY bin
+            ORDER BY bin
+        """
+        res = c.execute(sql, (bin_size, bin_size)).fetchall()
+    res = [{"bin": r[0], "count": r[1]} for r in res]
+    return res
+
+def get_top_N_prolific_actors(N: int) -> list:
+    with connection.cursor() as c:
+        sql = """ SELECT COUNT(c.person_id), pe.name
+            FROM cast c 
+            JOIN persons pe 
+            ON c.person_id = pe.person_id 
+            GROUP BY c.person_id 
+            ORDER BY COUNT(c.person_id) DESC
+            LIMIT ? 
+        """ 
+        res = c.execute(sql, (N,)).fetchall()
+    res = [{"movies_played": r[0], "actor": r[1]} for r in res]
+    return res

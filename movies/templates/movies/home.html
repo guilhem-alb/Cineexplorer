@@ -4,37 +4,42 @@
 
 
 {% block content %}
-<div>
-    <h1> Cineexplorer </h1>
-    <h4> a movies database explorer</h4>
+<div class="flex justify-center">
+    <div class="flex-col justify-center items-center-safe text-center rounded-xl p-10 border-2 border-gray-200">
+        <h1 class="h-1/2 flex justify-center items-center text-6xl font-bold text-red-400"> Cineexplorer </h1>
+        <h4 class="h-1/2 flex justify-center items-center text-xl font-semibold"> a movies database explorer !</h4>
+    </div>
 </div>
-
-<div>
-    <h2>Our data:</h2>
-    <div>
-        <h3>{{ stats.movieCnt }} Movies !</h3>
-        <h3> {{ stats.actorCnt }} Actors !</h3>
-        <h3>{{ stats.directorCnt }} Directors !</h3>
+<div class="flex-row justify-center items-center mt-4 ">
+    <h2 class="pl-8 text-2xl">Our data:</h2>
+    <div class="flex justify-around text-xl bg-blue-950  border border-r-0 border-l-0 border-white ">
+        <h3 class="border-r w-1/3 border-white pl-3">{{ stats.movieCnt }} Movies !</h3>
+        <h3 class="border-r w-1/3 border-white pl-3"> {{ stats.actorCnt }} Actors !</h3>
+        <h3 class="w-1/3 pl-3">{{ stats.directorCnt }} Directors !</h3>
+    </div>
+</div>
+<div class="flex justify-center border-b-2  border-gray-200" >
+    <div class="flex-col justify-between items-center text-center rounded-xl p-10 w-full">
+        <h2 class="text-center text-2xl font-semibold pb-6" > Search for any movie ! </h2>
+        <form method="get" action="/search" class="flex justify-center items-center w-full">
+            <input name="q" type="search" placeholder="search" class="text-gray-700 border-b rounded-l-md border-gray-500 bg-indigo-100 px-2 h-10 w-80 focus:outline-none focus:border-2 focus:border-gray">
+            <input type="submit" value="submit" class="text-black px-1 border-r border-b border-gray-500 rounded-r-md bg-blue-300 shadow-black/20 h-10 shadow-md md:hidden lg:inline-block hover:shadow-inner transition-shadow">
+        </form>
     </div>
 </div>
 
-<div>
-    <h2> Search for any movie ! </h2>
-    <form method="get" action="/search">
-        <input name="q" type="search" placeholder="search">
-        <input type="submit" value="submit">
-    </form>
-</div>
-
-<div>
-    <h2>The biggest hits !</h2>
-    <div>
+<div class="flex-col justify-center">
+    <h2 class="text-2xl font-bold text-center p-6">The biggest hits !</h2>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
         {% for movie in top_movies %}
-            <div>
-                <h3>{{ movie.rank }}</h3>
-                <div>
-                    {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title width=100%}
-                    note: {{ movie.rating }}, votes: {{ movie.votes }}
+            <div class="flex justify-between border border-amber-50">
+                <h3 class="pl-3 text-6xl font-bold text-shadow-red-300">{{ movie.rank }}</h3>
+                <div class="flex-col justify-between"   >
+                    {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title %}
+                    <ul class="flex-col justify-between">
+                        <li class="text-xl">note: {{ movie.rating }}</li>
+                        <li class="text-xl">votes: {{ movie.votes }}</li>
+                    </ul>
                 </div>
             </div>
         {% endfor %}
@@ -42,10 +47,14 @@
 </div>
 
 <div>
-    <h2>Discover: </h2>
-    {% for movie in rd_movies %}
-        {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title width=100 %}
-    {% endfor %}
+    <h2 class="text-2xl font-bold text-center p-6">Discover: </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-5">
+        {% for movie in rd_movies %}
+        <div>
+            {% include "movies/components/movie_card.html" with mid=movie.mid title=movie.title %}
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %} 
 

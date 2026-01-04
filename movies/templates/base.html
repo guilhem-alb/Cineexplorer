@@ -3,28 +3,30 @@
 <head>
     <meta charset="utf-8">
     <title>{% block title %} Cineexplorer {% endblock %}</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1" />  
     {% load static %}
-
+    <link href="{% static 'css/dist/styles.css' %}" rel='stylesheet'>
     {% block extra_head %}{% endblock %}
 </head>
 <body>
-    <header>
-        <h1> Cineexplorer</h1>
-        <div>
-            <nav>
-                <a href="/">Home page</a>
-                <a href="/movies">Movies</a>
-                <a href="/stats">Statistics</a>
-            </nav>
-            <form method="get" action="/search">
-                <input name="q" type="search" placeholder="search">
-                <input type="submit" value="submit">
+    
+    <header class="flex flex-col lg:flex-row justify-center w-full border-t border-blue bg-gray-200 shadow-xl shadow-black/20">
+        <h1 class="bg-linear-to-r from-blue-600 to-gray-200 h-full text-4xl font-bold text-red-400 text-center px-12  py-4"><a href="/">Cineexplorer</a></h1>
+        <nav class="flex flex-1 flex-col md:flex-row justify-end items-center">
+            <a href="/" class="h-full  flex justify-center items-center hover:bg-gray-400 hover:border-b-2"><div class="px-8 py-3">Home page</div></a>
+            <a href="/movies" class="h-full px-8 sm:px-0 md:px-0 flex justify-center items-center hover:bg-gray-400 hover:border-b-2">Movies</a>
+            <a href="/stats" class="h-full flex justify-center items-center hover:bg-gray-400 hover:border-b-2"><div class="px-8 py-3">Statistics</div></a>
+            <form method="get" action="/search" class="justify-end px-8" >
+                <input name="q" type="search" placeholder="search" class="border-b rounded-l-md border-gray-500 bg-indigo-100 px-2 sm:w-20 md:w-40 lg:w-60 focus:outline-none focus:border-2 focus:border-gray">
+                <input type="submit" value="submit" class="px-1 border-r border-b border-gray-500 rounded-r-md bg-blue-300 shadow-black/20 shadow-md hover:shadow-inner transition-shadow">
             </form>
-        </div>
+        </nav>
     </header>
 
-    <main>
+
+</header>
+
+    <main class="bg-cyan-950 py-20 text-amber-50">
         {% block content %}{% endblock %}
     </main>
 
