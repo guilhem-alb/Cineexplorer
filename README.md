@@ -24,8 +24,8 @@ The raw data can be downloaded from https://datasets.imdbws.com/, however the da
 ### Movies page:
 ![list page](screenshots/list.png)
 
-### Phone view:
-![phone view](screenshots/phone_view.png)
+### Mobile view:
+![Mobile view](screenshots/phone_view.png)
 
 ### Stats page:
 ![stats page](screenshots/stats.png)
